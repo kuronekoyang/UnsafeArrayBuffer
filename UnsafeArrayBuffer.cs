@@ -173,6 +173,17 @@ namespace kuro
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Reset()
+        {
+            if (_length > 0)
+            {
+                Array.Clear(_buffer, 0, _length);
+                SetBufferLength(_buffer, 0);
+                _length = 0;
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Contains(T item) => Array.IndexOf(InternalBuffer, item) != -1;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
