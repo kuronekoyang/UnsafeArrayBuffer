@@ -15,6 +15,28 @@ namespace kuro
         private int _capacity;
         private int _length;
 
+        public UnsafeArrayBuffer(int size) : this() => Resize(size);
+
+        public UnsafeArrayBuffer(ReadOnlySpan<T> span) : this()
+        {
+            this.AddRange(span);
+        }
+
+        public UnsafeArrayBuffer(UnsafeArrayBuffer<T> buffer) : this()
+        {
+            this.AddRange(buffer.AsSpan());
+        }
+
+        public UnsafeArrayBuffer(IList<T> list) : this()
+        {
+            var count = list.Count;
+            if (count > 0)
+            {
+                Resize(count);
+                for (int i = 0; i < count; i++)
+                    this[i] = list[i];
+            }
+        }
 
         public bool IsEmpty
         {
